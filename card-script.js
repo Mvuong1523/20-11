@@ -109,6 +109,7 @@ function createFloatingHeart() {
     heart.style.left = Math.random() * 100 + '%';
     heart.style.animationDuration = (4 + Math.random() * 3) + 's';
     heart.style.animationDelay = Math.random() * 2 + 's';
+    heart.style.willChange = 'transform, opacity';
     
     floatingHearts.appendChild(heart);
     
@@ -118,17 +119,23 @@ function createFloatingHeart() {
 }
 
 function startFloatingHearts() {
-    setInterval(createFloatingHeart, 500);
-    for (let i = 0; i < 10; i++) {
+    const heartInterval = isMobile ? 1000 : 500;
+    const initialHearts = isMobile ? 5 : 10;
+    
+    setInterval(createFloatingHeart, heartInterval);
+    for (let i = 0; i < initialHearts; i++) {
         setTimeout(createFloatingHeart, i * 200);
     }
 }
 
 // ========== FIREWORKS ==========
 const fireworksCanvas = document.getElementById('fireworksCanvas');
-const fwCtx = fireworksCanvas.getContext('2d');
+const fwCtx = fireworksCanvas.getContext('2d', { alpha: false });
 fireworksCanvas.width = window.innerWidth;
 fireworksCanvas.height = window.innerHeight;
+
+// Reduce fireworks on mobile
+const isMobile = window.innerWidth <= 768;
 
 class Firework {
     constructor() {
@@ -228,18 +235,20 @@ function animateFireworks() {
 }
 
 function startFireworks() {
+    if (isMobile) return; // Disable fireworks on mobile for performance
+    
     animateFireworks();
     
     setInterval(() => {
-        if (Math.random() < 0.5) {
+        if (Math.random() < 0.3) {
             fireworks.push(new Firework());
         }
-    }, 800);
+    }, 1200);
 }
 
 // ========== PARTICLE BACKGROUND ==========
 const particleCanvas = document.getElementById('particleCanvas');
-const pCtx = particleCanvas.getContext('2d');
+const pCtx = particleCanvas.getContext('2d', { alpha: true });
 particleCanvas.width = window.innerWidth;
 particleCanvas.height = window.innerHeight;
 
@@ -247,10 +256,10 @@ class BackgroundParticle {
     constructor() {
         this.x = Math.random() * particleCanvas.width;
         this.y = Math.random() * particleCanvas.height;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = (Math.random() - 0.5) * 0.5;
-        this.speedY = (Math.random() - 0.5) * 0.5;
-        this.color = `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.2})`;
+        this.size = Math.random() * 2 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = (Math.random() - 0.5) * 0.3;
+        this.color = `rgba(255, 255, 255, ${Math.random() * 0.3 + 0.1})`;
     }
     
     update() {
@@ -269,12 +278,24 @@ class BackgroundParticle {
     }
 }
 
+// Reduce particles on mobile
+const particleCount = isMobile ? 30 : 80;
 const bgParticles = [];
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < particleCount; i++) {
     bgParticles.push(new BackgroundParticle());
 }
 
-function animateBgParticles() {
+let lastTime = 0;
+const fps = isMobile ? 30 : 60;
+const interval = 1000 / fps;
+
+function animateBgParticles(currentTime) {
+    if (currentTime - lastTime < interval) {
+        requestAnimationFrame(animateBgParticles);
+        return;
+    }
+    lastTime = currentTime;
+    
     pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
     
     bgParticles.forEach(p => {
@@ -282,20 +303,22 @@ function animateBgParticles() {
         p.draw();
     });
     
-    // Draw connections
-    for (let i = 0; i < bgParticles.length; i++) {
-        for (let j = i + 1; j < bgParticles.length; j++) {
-            const dx = bgParticles[i].x - bgParticles[j].x;
-            const dy = bgParticles[i].y - bgParticles[j].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance < 100) {
-                pCtx.beginPath();
-                pCtx.strokeStyle = `rgba(255, 255, 255, ${0.2 * (1 - distance / 100)})`;
-                pCtx.lineWidth = 0.5;
-                pCtx.moveTo(bgParticles[i].x, bgParticles[i].y);
-                pCtx.lineTo(bgParticles[j].x, bgParticles[j].y);
-                pCtx.stroke();
+    // Draw connections (skip on mobile for performance)
+    if (!isMobile) {
+        for (let i = 0; i < bgParticles.length; i++) {
+            for (let j = i + 1; j < bgParticles.length; j++) {
+                const dx = bgParticles[i].x - bgParticles[j].x;
+                const dy = bgParticles[i].y - bgParticles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 100) {
+                    pCtx.beginPath();
+                    pCtx.strokeStyle = `rgba(255, 255, 255, ${0.15 * (1 - distance / 100)})`;
+                    pCtx.lineWidth = 0.5;
+                    pCtx.moveTo(bgParticles[i].x, bgParticles[i].y);
+                    pCtx.lineTo(bgParticles[j].x, bgParticles[j].y);
+                    pCtx.stroke();
+                }
             }
         }
     }
