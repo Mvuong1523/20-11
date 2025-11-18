@@ -23,27 +23,27 @@ introButton.addEventListener('click', () => {
         cardScreen.classList.add('active');
         startFireworks();
         startFloatingHearts();
+        startMusic(); // Start music when entering main screen
     }, 1000);
 });
 
 // ========== PHOTO SLIDER ==========
 const photoSlider = document.getElementById('photoSlider');
+const photoGallery = document.querySelector('.photo-gallery');
 
 function initPhotoSlider() {
-    // Duplicate images for infinite scroll
-    const allImages = [...images, ...images];
-    
-    allImages.forEach((img, index) => {
+    images.forEach((img, index) => {
         const photoItem = document.createElement('div');
         photoItem.className = 'photo-item';
         
         const imgElement = document.createElement('img');
         imgElement.src = img;
-        imgElement.alt = `Memory ${index + 1}`;
+        imgElement.alt = `Kỷ niệm ${index + 1}`;
+        imgElement.draggable = false;
         
         const overlay = document.createElement('div');
         overlay.className = 'photo-overlay';
-        overlay.textContent = `Kỷ niệm ${(index % images.length) + 1}`;
+        overlay.textContent = `Kỷ niệm ${index + 1}`;
         
         photoItem.appendChild(imgElement);
         photoItem.appendChild(overlay);
@@ -52,6 +52,51 @@ function initPhotoSlider() {
 }
 
 initPhotoSlider();
+
+// Drag to scroll functionality
+let isDown = false;
+let startX;
+let scrollLeft;
+
+photoGallery.addEventListener('mousedown', (e) => {
+    isDown = true;
+    photoGallery.classList.add('grabbing');
+    startX = e.pageX - photoGallery.offsetLeft;
+    scrollLeft = photoGallery.scrollLeft;
+});
+
+photoGallery.addEventListener('mouseleave', () => {
+    isDown = false;
+    photoGallery.classList.remove('grabbing');
+});
+
+photoGallery.addEventListener('mouseup', () => {
+    isDown = false;
+    photoGallery.classList.remove('grabbing');
+});
+
+photoGallery.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - photoGallery.offsetLeft;
+    const walk = (x - startX) * 2;
+    photoGallery.scrollLeft = scrollLeft - walk;
+});
+
+// Touch scroll for mobile
+let touchStartX = 0;
+let touchScrollLeft = 0;
+
+photoGallery.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].pageX;
+    touchScrollLeft = photoGallery.scrollLeft;
+}, { passive: true });
+
+photoGallery.addEventListener('touchmove', (e) => {
+    const touchX = e.touches[0].pageX;
+    const walk = (touchStartX - touchX) * 1.5;
+    photoGallery.scrollLeft = touchScrollLeft + walk;
+}, { passive: true });
 
 // ========== FLOATING HEARTS ==========
 const floatingHearts = document.getElementById('floatingHearts');
@@ -472,3 +517,39 @@ sparkleStyle.textContent = `
     }
 `;
 document.head.appendChild(sparkleStyle);
+
+
+// ========== MUSIC CONTROL ==========
+const musicBtn = document.getElementById('musicBtn');
+const bgMusic = document.getElementById('bgMusic');
+let isPlaying = false;
+
+// Auto play music when entering main screen
+function startMusic() {
+    bgMusic.volume = 0.3; // Set volume to 30%
+    bgMusic.play().then(() => {
+        isPlaying = true;
+        musicBtn.classList.add('playing');
+    }).catch(err => {
+        console.log('Auto-play prevented:', err);
+    });
+}
+
+musicBtn.addEventListener('click', () => {
+    if (isPlaying) {
+        bgMusic.pause();
+        musicBtn.classList.remove('playing');
+        isPlaying = false;
+    } else {
+        bgMusic.play();
+        musicBtn.classList.add('playing');
+        isPlaying = true;
+    }
+});
+
+// Try to start music when user interacts
+document.addEventListener('click', () => {
+    if (!isPlaying && bgMusic.paused) {
+        startMusic();
+    }
+}, { once: true });
