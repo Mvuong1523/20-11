@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng 20/11 - Interactive Edition</title>
+    <link rel="stylesheet" href="game-style.css">
+    <link rel="stylesheet" href="modal.css">
+</head>
+<body>
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Welcome Screen -->
+        <div class="screen active" id="welcomeScreen">
+            <div class="welcome-content">
+                <h1 class="glitch" data-text="CHÚC MỪNG 20/11">CHÚC MỪNG 20/11</h1>
+                <div class="subtitle">Dành tặng Mẹ yêu quý</div>
+                <div class="year-display">2025</div>
+                <button class="neon-button" onclick="startJourney()">
+                    <span>BẮT ĐẦU HÀNH TRÌNH</span>
+                    <div class="neon-glow"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Selection -->
+        <div class="screen" id="gameSelection">
+            <h2 class="screen-title">Trò Chơi Đoán Chữ</h2>
+            <div class="game-grid">
+                <div class="game-card" onclick="startGame('word')" style="max-width: 400px; margin: 0 auto;">
+                    <div class="card-icon">📝</div>
+                    <h3>Đoán Chữ Nghề Giáo</h3>
+                    <p>Giải mã những từ ý nghĩa về nghề giáo viên</p>
+                    <p style="margin-top: 15px; color: #00fffc;">🎯 3 từ đơn giản</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button class="back-button" onclick="showScreen('welcomeScreen')">← Quay lại</button>
+                <button class="back-button" onclick="window.location.href='card.html'">🏠 Trang chủ</button>
+            </div>
+        </div>
+
+        <!-- Word Game -->
+        <div class="screen" id="wordGame">
+            <h2 class="screen-title">Đoán Chữ Nghề Giáo</h2>
+            <div class="word-display" id="wordDisplay"></div>
+            <div class="word-hint" id="wordHint"></div>
+            <div class="keyboard" id="keyboard"></div>
+            <div class="word-stats">
+                <div>Từ: <span id="wordProgress">1</span>/3</div>
+                <div>Điểm: <span id="wordScore">0</span></div>
+                <div>Sai: <span id="wordErrors">0</span>/6</div>
+            </div>
+            <canvas id="hangmanCanvas" width="200" height="250"></canvas>
+            <div class="game-controls">
+                <button class="control-button" onclick="nextWord()">➡️ Từ tiếp theo</button>
+                <button class="control-button" onclick="initWordGame()">🔄 Chơi lại</button>
+                <button class="control-button" onclick="window.location.href='card.html'">🏠 Trang chủ</button>
+            </div>
+        </div>
+
+        <!-- Final Message -->
+        <div class="screen" id="finalScreen">
+            <div class="final-content">
+                <div class="trophy-animation">🏆</div>
+                <h2 class="final-title">Chúc Mừng!</h2>
+                <div class="final-message">
+                    <p>Kính gửi Mẹ yêu quý,</p>
+                    <p>Con đã chuẩn bị trò chơi nhỏ này để tôn vinh ngày đặc biệt của Mẹ.</p>
+                    <p>Cảm ơn Mẹ đã luôn là nguồn cảm hứng, là ngọn đèn soi đường cho con và biết bao học trò.</p>
+                    <p>Chúc Mẹ luôn tràn đầy sức khỏe, hạnh phúc và thành công trong sự nghiệp cao quý!</p>
+                    <p class="signature">❤️ Con yêu Mẹ rất nhiều ❤️</p>
+                </div>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <button class="neon-button" onclick="showScreen('gameSelection')">
+                        <span>🎮 CHƠI LẠI</span>
+                    </button>
+                    <button class="neon-button" onclick="window.location.href='card.html'">
+                        <span>🏠 VỀ TRANG CHỦ</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="modal.js"></script>
+    <script src="game-script.js"></script>
+</body>
+</html>
