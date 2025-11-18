@@ -12,6 +12,8 @@ body {
     animation: gradientShift 15s ease infinite;
     min-height: 100vh;
     position: relative;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
 }
 
 body::before {
@@ -69,8 +71,12 @@ body::before {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
-    background-size: 400% 400%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(255,107,107,0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(118,75,162,0.3) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(102,126,234,0.2) 0%, transparent 60%),
+        linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+    background-size: 400% 400%, 400% 400%, 400% 400%, 400% 400%;
     animation: gradientMove 10s ease infinite;
     z-index: 1000;
     transition: opacity 1s, transform 1s;
@@ -87,14 +93,23 @@ body::before {
     position: absolute;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: starsMove 20s linear infinite;
+    background: 
+        radial-gradient(circle, rgba(255,255,255,0.8) 2px, transparent 2px),
+        radial-gradient(circle, rgba(255,215,0,0.6) 1px, transparent 1px);
+    background-size: 80px 80px, 120px 120px;
+    background-position: 0 0, 40px 40px;
+    animation: starsMove 30s linear infinite, starsTwinkle 3s ease-in-out infinite;
+    opacity: 0.6;
 }
 
 @keyframes starsMove {
     0% { transform: translate(0, 0); }
-    100% { transform: translate(50px, 50px); }
+    100% { transform: translate(80px, 80px); }
+}
+
+@keyframes starsTwinkle {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
 }
 
 .opening-screen.hide {
@@ -107,6 +122,31 @@ body::before {
     text-align: center;
     position: relative;
     z-index: 1;
+    padding: 20px;
+}
+
+.intro-animation::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    animation: glowPulse 3s ease-in-out infinite;
+    border-radius: 50%;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 1;
+    }
 }
 
 /* Intro Lines */
@@ -123,10 +163,23 @@ body::before {
     font-weight: bold;
     color: #fff;
     text-shadow: 
-        0 0 20px rgba(255,255,255,0.5),
-        0 5px 30px rgba(255,107,107,0.5);
+        0 0 30px rgba(255,255,255,0.8),
+        0 0 60px rgba(255,107,107,0.6),
+        0 5px 30px rgba(255,107,107,0.5),
+        0 10px 50px rgba(118,75,162,0.4);
     opacity: 0;
     display: inline-block;
+    position: relative;
+}
+
+.intro-line .word::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    filter: blur(20px);
+    opacity: 0.5;
 }
 
 /* Line 1 - Slide from left and right */
@@ -363,6 +416,8 @@ body::before {
     overflow: hidden;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
 }
 
 .photo-slider {
@@ -457,6 +512,8 @@ body::before {
         inset 0 0 50px rgba(255,255,255,0.5);
     position: relative;
     overflow: hidden;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
 }
 
 .message-container::before {
@@ -878,29 +935,31 @@ body::before {
 @media (max-width: 768px) {
     /* Intro screen */
     .intro-line .word {
-        font-size: 2.5em;
+        font-size: 2.8em;
     }
     
     .intro-line {
         gap: 15px;
+        margin: 15px 0;
     }
     
     .intro-date {
-        font-size: 3.5em;
+        font-size: 4em;
+        margin: 25px 0;
     }
     
     .intro-subtitle {
-        font-size: 1.3em;
+        font-size: 1.4em;
         padding: 0 20px;
     }
     
     .intro-icon {
-        font-size: 3.5em;
+        font-size: 4em;
     }
     
     .intro-button {
-        padding: 15px 40px;
-        font-size: 1.2em;
+        padding: 18px 50px;
+        font-size: 1.3em;
     }
     
     /* Main content */
@@ -958,31 +1017,46 @@ body::before {
 
 @media (max-width: 480px) {
     .intro-line .word {
-        font-size: 2em;
+        font-size: 2.2em;
+    }
+    
+    .intro-line {
+        gap: 10px;
     }
     
     .intro-date {
-        font-size: 3em;
+        font-size: 3.5em;
     }
     
     .intro-subtitle {
+        font-size: 1.2em;
+    }
+    
+    .intro-button {
+        padding: 15px 40px;
         font-size: 1.1em;
     }
     
     .main-title {
-        font-size: 1.5em;
+        font-size: 1.8em;
     }
     
     .message-container {
-        padding: 25px 15px;
+        padding: 30px 20px;
+        margin: 20px 10px;
     }
     
     .message-line {
-        font-size: 0.95em;
+        font-size: 1em;
     }
     
     .photo-item {
-        min-width: 250px;
-        height: 180px;
+        min-width: 280px;
+        height: 200px;
+    }
+    
+    body {
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 }
