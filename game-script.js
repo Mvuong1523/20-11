@@ -477,7 +477,7 @@ function nextWord() {
                 buttons: [
                     { text: '🎊 Xem lời chúc', callback: () => showScreen('finalScreen') },
                     { text: '🔄 Chơi lại', callback: initWordGame },
-                    { text: '🏠 Về trang chủ', callback: () => window.location.href = 'card.html' }
+                    { text: '🏠 Về trang chủ', callback: () => window.location.href = 'index.html' }
                 ]
             });
         }, 500);
