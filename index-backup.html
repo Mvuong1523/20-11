@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Ngày Nhà Giáo Việt Nam 20/11</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Intro Screen -->
+    <div class="intro-screen" id="introScreen">
+        <div class="intro-content">
+            <div class="book-icon">📚</div>
+            <h1 class="intro-title">Ngày Nhà Giáo Việt Nam</h1>
+            <div class="intro-date">20 • 11 • 2025</div>
+            <button class="start-button" id="startButton">
+                <span>Mở Thiệp</span>
+                <span class="sparkle">✨</span>
+            </button>
+        </div>
+        <div class="particles" id="particles"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container" id="mainContent">
+        <div class="flowers-container" id="flowersContainer"></div>
+        <div class="confetti-container" id="confettiContainer"></div>
+        <div class="stars-container" id="starsContainer"></div>
+        
+        <div class="content">
+            <div class="rainbow-text">
+                <h1 class="title">Chúc Mừng Ngày Nhà Giáo Việt Nam</h1>
+            </div>
+            <div class="date-wrapper">
+                <div class="date">20 • 11</div>
+                <div class="year">2025</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-glow"></div>
+                <div class="rotating-hearts">
+                    <span class="orbit-heart" style="--i:0">❤️</span>
+                    <span class="orbit-heart" style="--i:1">💖</span>
+                    <span class="orbit-heart" style="--i:2">💝</span>
+                    <span class="orbit-heart" style="--i:3">💗</span>
+                </div>
+                
+                <div class="heart-main">❤️</div>
+                <h2 class="card-title">
+                    <span class="letter">K</span><span class="letter">í</span><span class="letter">n</span><span class="letter">h</span>
+                    <span class="space"> </span>
+                    <span class="letter">G</span><span class="letter">ử</span><span class="letter">i</span>
+                    <span class="space"> </span>
+                    <span class="letter">M</span><span class="letter">ẹ</span>
+                    <span class="space"> </span>
+                    <span class="letter">Y</span><span class="letter">ê</span><span class="letter">u</span>
+                    <span class="space"> </span>
+                    <span class="letter">Q</span><span class="letter">u</span><span class="letter">ý</span>
+                </h2>
+                
+                <div class="message-box">
+                    <p class="message typing-text" id="typingText"></p>
+                </div>
+                
+                <div class="signature">
+                    <span class="signature-line">━━━━━━━━━━━━</span>
+                    <span class="signature-text">Con của mẹ</span>
+                    <span class="signature-line">━━━━━━━━━━━━</span>
+                </div>
+                
+                <div class="gift-box" id="giftBox">
+                    <div class="gift">🎁</div>
+                    <p class="gift-text">Click vào quà!</p>
+                </div>
+            </div>
+            
+            <div class="decorative-flowers">
+                <span class="flower">🌸</span>
+                <span class="flower">🌺</span>
+                <span class="flower">🌻</span>
+                <span class="flower">🌷</span>
+                <span class="flower">🌹</span>
+                <span class="flower">💐</span>
+                <span class="flower">🏵️</span>
+            </div>
+            
+            <div class="music-control" id="musicControl">
+                <button class="music-btn" id="musicBtn">🎵</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hidden Audio -->
+    <audio id="bgMusic" loop>
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUKzn77RgGwU7k9n0yHYpBSh+zPLaizsKElyx6+mnUxIJRp/h8r5sIAUsgs/y2Ik2Bxpqvu/mnEwMDlCs5++zYBoFO5PZ9Mh2KQUofszy2os7ChJcsevrp1MSCUaf4fK+bCAFLILP8tmJNgcaab7v5pxMDA5QrOfvs2AaBTuT2fTIdigFKH7M8tqLOwoSXLHr66dTEglGn+HyvmwgBSyCz/LZiTYHGmm+7+acTAwOUKzn77NgGgU7k9n0yHYoBSh+zPLaizsKElyx6+unUxIJRp/h8r5sIAUsgs/y2Yk2Bxppvu/mnEwMDlCs5++zYBoFO5PZ9Mh2KAUofszy2os7ChJcsevrp1MSCUaf4fK+bCAFLILP8tmJNgcaab7v5pxMDA5QrOfvs2AaBTuT2fTIdigFKH7M8tqLOwoSXLHr66dTEglGn+HyvmwgBSyCz/LZiTYHGmm+7+acTAwOUKzn77NgGgU7k9n0yHYoBSh+zPLaizsKElyx6+unUxIJRp/h8r5sIAUsgs/y2Yk2Bxppvu/mnEwMDlCs5++zYBoFO5PZ9Mh2KAUofszy2os7ChJcsevrp1MSCUaf4fK+bCAFLILP8tmJNgcaab7v5pxMDA5QrOfvs2AaBTuT2fTIdigFKH7M8tqLOwoSXLHr66dTEglGn+HyvmwgBSyCz/LZiTYHGmm+7+acTAwOUKzn77NgGgU7k9n0yHYoBSh+zPLaizsKElyx6+unUxIJRp/h8r5sIAUsgs/y2Yk2Bxppvu/mnEwMDlCs5++zYBoFO5PZ9Mh2KAUofszy2os7ChJcsevrp1MSCUaf4fK+bCAFLILP8tmJNgcaab7v5pxMDA5QrOfvs2AaBTuT2fTIdigFKH7M8tqLOwoSXLHr66dTEglGn+HyvmwgBSyCz/LZiTYHGmm+7+acTAwOUKzn77NgGgU7k9n0yHYoBSh+zPLaizsKElyx6+unUxIJRp/h8r5sIAUsgs/y2Yk2Bxppvu/mnEwMDlCs5++zYBoFO5PZ9Mh2KAUofszy2os7ChJcsevrp1MSCUaf4fK+bCAFLILP8tmJNgcaab7v5pxMDA5QrOfvs2AaBTuT2fTIdigFKH7M8tqLOwoSXLHr66dTEglGn+HyvmwgBSyCz/LZiTYHGmm+7+acTAwOUKzn77NgGgU7k9n0yHYoBSh+zPLaizsKElyx6+unUxIJRp/h8r5sIAUsgs/y2Yk2Bxppvu/mnEwMDlCs5++zYBoFO5PZ9Mh2KAUofszy" type="audio/wav">
+    </audio>
+    
+    <script src="script.js"></script>
+</body>
+</html>
