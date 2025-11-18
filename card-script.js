@@ -17,13 +17,17 @@ const openingScreen = document.getElementById('openingScreen');
 const cardScreen = document.getElementById('cardScreen');
 
 introButton.addEventListener('click', () => {
+    // Try to start music on button click (user interaction)
+    if (bgMusic.paused) {
+        startMusic();
+    }
+    
     openingScreen.classList.add('hide');
     setTimeout(() => {
         openingScreen.style.display = 'none';
         cardScreen.classList.add('active');
         startFireworks();
         startFloatingHearts();
-        startMusic(); // Start music when entering main screen
     }, 1000);
 });
 
@@ -557,6 +561,17 @@ function startMusic() {
         console.log('Auto-play prevented:', err);
     });
 }
+
+// Try to auto-play immediately when page loads
+window.addEventListener('load', () => {
+    bgMusic.volume = 0.3;
+    bgMusic.play().then(() => {
+        isPlaying = true;
+        musicBtn.classList.add('playing');
+    }).catch(err => {
+        console.log('Auto-play on load prevented, will try on user interaction');
+    });
+});
 
 musicBtn.addEventListener('click', () => {
     if (isPlaying) {
